@@ -1,13 +1,10 @@
 import { Roboto } from "next/font/google";
-import { FaSearch } from "react-icons/fa";
 
-import { Input } from "@/components/ui/input";
 import "./globals.css";
 import Link from "next/link";
 
 import CurrencySelect from "@/components/currency-select/currency-select";
 import Search from "@/components/search/search";
-import { Button } from "@/components/ui/button";
 
 export const metadata = {
 	title: "ChainWatcher - Search Blockhain Addreses and Transactions",
