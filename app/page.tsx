@@ -1,9 +1,3 @@
-import { Input } from "@/components/ui/input"
-
-export default function Home() {
-  return (
-    <>
-      <h1 className="">Welcome</h1>
-    </>
-  )
+export default async function Home() {
+	return <>Welcome to the best place on earth.</>;
 }
