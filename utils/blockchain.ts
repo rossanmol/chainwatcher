@@ -10,10 +10,14 @@ export async function getAddress(hash: string) {
 	);
 
 	const json = await res.json();
+	if (!json) {
+		return undefined;
+	}
 	const parsedJson = BlockchainAddressResponse.parse(json);
 	const address = parsedJson.data[hash].address;
 
 	return {
+		hash,
 		totalTransactions: address.transaction_count,
 		received: convertBalance(address.received),
 		spent: convertBalance(address.spent),

@@ -30,8 +30,20 @@ async function getTopAdresses() {
 	});
 }
 
+async function getAddressSubscriptions() {
+	const prisma = new PrismaClient();
+
+	return prisma.addressSubscription.findMany({
+		take: 5,
+	});
+}
+
 export default async function Home() {
-	const [transactions, addresses] = await Promise.all([getTopTransactions(), getTopAdresses()]);
+	const [transactions, addresses, addressSubscriptions] = await Promise.all([
+		getTopTransactions(),
+		getTopAdresses(),
+		getAddressSubscriptions(),
+	]);
 
 	return (
 		<>
@@ -49,6 +61,10 @@ export default async function Home() {
 				<TopWidget
 					title="Top Addresses"
 					items={addresses.map((address) => ({ ...address, url: `/address/${address.id}` }))}
+				/>
+				<TopWidget
+					title="Address Subscriptions"
+					items={addressSubscriptions.map((address) => ({ ...address, url: `/address/${address.id}` }))}
 				/>
 			</section>
 		</>

@@ -4,6 +4,13 @@ import { PrismaClient } from "@prisma/client";
 
 import CopyToClipboardButton from "@/components/copy-to-clipboard/copy-to-clipboard";
 import InfoSection from "@/components/info-section/info-section";
+import SubscribeButton from "@/components/subscribe-button/subscribe-button";
+
+interface Page {
+	params: {
+		transaction: string;
+	};
+}
 
 async function increaseCount(hash: string) {
 	const prisma = new PrismaClient();
@@ -22,7 +29,14 @@ async function increaseCount(hash: string) {
 	});
 }
 
-export default async function TransactionPage({ params: { transaction } }: { params: { transaction: string } }) {
+export async function generateMetadata({ params: { transaction } }: Page) {
+	return {
+		title: `${transaction} transaction | ChainWatcher`,
+		description: `View ${transaction} transaction. Explore the world of blockchain with our cutting-edge app. Access real-time BTC address and transaction data, subscribe to hash updates, and enjoy customizable currency displays in USD, EUR, or BTC. Elevate your crypto experience today.`,
+	};
+}
+
+export default async function TransactionPage({ params: { transaction } }: Page) {
 	const payload = await getTransaction(transaction);
 
 	if (!payload) {
@@ -68,6 +82,9 @@ export default async function TransactionPage({ params: { transaction } }: { par
 				<InfoSection title="BTC Input" value={payload.totalBtcInput} />
 				<InfoSection title="BTC output" value={payload.totalBtcOutput} />
 				<InfoSection title="Fees" value={payload.totalFees} />
+				<div className="text-right">
+					<SubscribeButton transaction={transaction} />
+				</div>
 			</section>
 		</section>
 	);
