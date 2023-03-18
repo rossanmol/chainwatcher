@@ -1,4 +1,4 @@
-import { getAddress } from "@/blockchain/blockchain";
+import { getAddress } from "@/utils/blockchain";
 
 export default async function AddressPage({
 	params: { address },

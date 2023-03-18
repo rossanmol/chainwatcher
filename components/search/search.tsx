@@ -1,55 +1,100 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
+import useComponentVisible from "@/utils/use-outside";
 
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import {
+	Command,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from "@/components/ui/command";
 
 export default function Search({ className }: { className: string }) {
 	const router = useRouter();
-	const [address, setAddress] = useState<string | undefined>();
-	const [transaction, setTransaction] = useState<string | undefined>();
+	const [term, setTerm] = useState<string>("");
+	const [address, setAddress] = useState<string | undefined | null>();
+	const [transaction, setTransaction] = useState<string | undefined | null>();
+	const { ref, isComponentVisible, setIsComponentVisible } =
+		useComponentVisible<HTMLDivElement>(false);
+
+	useEffect(
+		() => setIsComponentVisible(!!term.length),
+		[term, setIsComponentVisible]
+	);
+
+	const submitSearch = () => {
+		setIsComponentVisible(false);
+
+		if (address) {
+			return router.push(`/address/${address}`);
+		}
+
+		if (transaction) {
+			return router.push(`/transaction/${transaction}`);
+		}
+	};
 
 	return (
-		<form
-			className={className}
-			onSubmit={(e) => {
-				e.preventDefault();
-				if (address) {
-					return router.push(`/address/${address}`);
-				}
-
-				if (transaction) {
-					return router.push(`/transaction/${transaction}`);
-				}
-			}}
-		>
-			<Input
-				onChange={(event) => {
-					const { value } = event.target;
-
-					const sanitizedValue = value.trim();
-					const addressMatch = sanitizedValue.match(
-						/([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/
-					);
-					const transactionMatch = sanitizedValue.match(/^[a-fA-F0-9]{64}$/);
-
-					if (addressMatch) {
-						setAddress(addressMatch[0]);
-					}
-
-					if (transactionMatch) {
-						setTransaction(addressMatch[0]);
-					}
+		<>
+			<form
+				className={`block @container ${className} relative`}
+				onSubmit={(e) => {
+					e.preventDefault();
+					submitSearch();
 				}}
-				className="rounded-r-none bg-white"
-				placeholder="Search Adresses and Transactions"
-			/>
-			<Button className="rounded-l-none">
-				<FaSearch />
-			</Button>
-		</form>
+			>
+				<Command
+					ref={ref}
+					shouldFilter={false}
+					className="absolute top-[-22px] hidden h-auto w-full overflow-visible rounded-lg border border-slate-100 shadow-md @xl:block dark:border-slate-800"
+				>
+					<CommandInput
+						onKeyDown={(event) => {
+							if (event.key === "Enter") {
+								submitSearch();
+							}
+						}}
+						onFocus={() => setIsComponentVisible(!!term.length)}
+						placeholder="Search Adresses and Transactions"
+						onValueChange={(value) => {
+							const sanitizedValue = value.trim();
+							const addressMatch = sanitizedValue.match(
+								/^([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/
+							);
+							const transactionMatch =
+								sanitizedValue.match(/^[a-fA-F0-9]{64}$/);
+
+							setAddress(addressMatch && addressMatch[0]);
+							setTransaction(transactionMatch && transactionMatch[0]);
+							setTerm(sanitizedValue);
+						}}
+					/>
+					{isComponentVisible && (
+						<CommandList>
+							<CommandGroup>
+								{!address && !transaction && (
+									<CommandItem disabled>
+										<span>No results found :(</span>
+									</CommandItem>
+								)}
+								{address && (
+									<CommandItem onSelect={submitSearch}>
+										<span>Address: {address}</span>
+									</CommandItem>
+								)}
+								{transaction && (
+									<CommandItem onSelect={submitSearch}>
+										<span>Transaction: {transaction}</span>
+									</CommandItem>
+								)}
+							</CommandGroup>
+						</CommandList>
+					)}
+				</Command>
+			</form>
+		</>
 	);
 }

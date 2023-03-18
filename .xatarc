@@ -1,0 +1,6 @@
+{
+	"databaseURL": "https://Rostislav-Dascal-s-workspace-jejqcv.eu-west-1.xata.sh/db/test",
+	"codegen": {
+		"output": "utils/xata.ts"
+	}
+}

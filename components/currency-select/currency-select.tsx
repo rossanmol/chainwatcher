@@ -1,44 +1,43 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
-import { Command } from "../ui/command"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select"
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../ui/select";
 
 const enum Currency {
-  btc = "btc",
-  eur = "eur",
-  usd = "usd",
+	btc = "btc",
+	eur = "eur",
+	usd = "usd",
 }
 
 export default function CurrencySelect() {
-  const [currency, setCurrency] = useState<Currency>(Currency.btc)
-  const currenciesMap = new Map([
-    [Currency.btc, "BTC (₿)"],
-    [Currency.eur, "EUR (€)"],
-    [Currency.usd, "USD ($)"],
-  ])
+	const [currency, setCurrency] = useState<Currency>(Currency.btc);
+	const currenciesMap = new Map([
+		[Currency.btc, "BTC (₿)"],
+		[Currency.eur, "EUR (€)"],
+		[Currency.usd, "USD ($)"],
+	]);
 
-  return (
-    <>
-      <Select onValueChange={(value) => setCurrency(value as Currency)}>
-        <SelectTrigger className="w-[90px]">
-          <SelectValue placeholder={currenciesMap.get(currency)} />
-        </SelectTrigger>
-        <SelectContent>
-          {Array.from(currenciesMap).map(([key, title]) => (
-            <SelectItem value={key} key={key}>
-              {title}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </>
-  )
+	return (
+		<>
+			<Select onValueChange={(value) => setCurrency(value as Currency)}>
+				<SelectTrigger className="w-[130px]">
+					<SelectValue placeholder={currenciesMap.get(currency)} />
+				</SelectTrigger>
+				<SelectContent>
+					{Array.from(currenciesMap).map(([key, title]) => (
+						<SelectItem value={key} key={key}>
+							{title}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+		</>
+	);
 }
