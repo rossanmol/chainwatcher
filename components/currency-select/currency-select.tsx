@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Currency, CurrencySchema } from "@/utils/blockchain.schema";
+import { parseCurrency } from "@/utils/currency";
 import Cookies from "universal-cookie";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
-export default function CurrencySelect({ selectedCurrency = Currency.btc }: { selectedCurrency: string | undefined }) {
-	const parsedCurrency = CurrencySchema.parse(selectedCurrency);
-
+export default function CurrencySelect({ selectedCurrency }: { selectedCurrency: string | undefined }) {
+	const parsedCurrency = parseCurrency(selectedCurrency);
 	const router = useRouter();
 	const [currency, setCurrency] = useState(parsedCurrency);
 	const currenciesMap = new Map([

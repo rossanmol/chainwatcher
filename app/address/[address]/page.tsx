@@ -1,10 +1,9 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { getAddress, getExchangeRate, getReadableCurrency } from "@/utils/blockchain";
-import { Currency } from "@/utils/blockchain.schema";
+import { getAddress } from "@/utils/blockchain";
+import { getExchangeRate, getReadableCurrency } from "@/utils/currency";
 import { PrismaClient } from "@prisma/client";
 
-import CopyToClipboardButton from "@/components/copy-to-clipboard/copy-to-clipboard";
 import InfoSection from "@/components/info-section/info-section";
 
 async function increaseCount(hash: string) {
@@ -27,9 +26,7 @@ async function increaseCount(hash: string) {
 export default async function AddressPage({ params: { address } }: { params: { address: string } }) {
 	const cookieStore = cookies();
 	const cookieCurrency = cookieStore.get("currency");
-	const currency = cookieCurrency?.value;
-
-	const [exchangeRate, payload] = await Promise.all([getExchangeRate(currency), getAddress(address)]);
+	const [exchangeRate, payload] = await Promise.all([getExchangeRate(cookieCurrency?.value), getAddress(address)]);
 
 	if (!payload) {
 		notFound();
