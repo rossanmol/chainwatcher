@@ -1,6 +1,7 @@
 import { Roboto } from "next/font/google";
 
 import "./globals.css";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 import CurrencySelect from "@/components/currency-select/currency-select";
@@ -18,15 +19,19 @@ const font = Roboto({
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+	const cookieStore = cookies();
+	const cookieCurrency = cookieStore.get("currency");
+	const currency = cookieCurrency?.value;
+
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<header className="flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3 relative">
+				<header className="relative flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3">
 					<Link className="text-xl font-black text-slate-50" href="/">
 						ChainWatcher
 					</Link>
 					<Search className="flex w-full max-w-xl" />
-					<CurrencySelect />
+					<CurrencySelect selectedCurrency={currency} />
 				</header>
 				<main className="col-span-3 min-h-screen bg-slate-100 dark:border-l-slate-700 xl:col-span-4">{children}</main>
 			</body>

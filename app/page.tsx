@@ -6,6 +6,9 @@ async function getTopTransactions() {
 	const prisma = new PrismaClient();
 
 	return prisma.transaction.findMany({
+		select: {
+			id: true,
+		},
 		orderBy: {
 			count: "desc",
 		},
@@ -17,6 +20,9 @@ async function getTopAdresses() {
 	const prisma = new PrismaClient();
 
 	return prisma.address.findMany({
+		select: {
+			id: true,
+		},
 		orderBy: {
 			count: "desc",
 		},
@@ -41,7 +47,7 @@ export default async function Home() {
 					items={transactions.map((transaction) => ({ ...transaction, url: `/transaction/${transaction.id}` }))}
 				/>
 				<TopWidget
-					title="Top Widgets"
+					title="Top Addresses"
 					items={addresses.map((address) => ({ ...address, url: `/address/${address.id}` }))}
 				/>
 			</section>

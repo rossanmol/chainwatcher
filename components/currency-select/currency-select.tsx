@@ -1,22 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Currency, CurrencySchema } from "@/utils/blockchain.schema";
+import Cookies from "universal-cookie";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
-const enum Currency {
-	btc = "btc",
-	eur = "eur",
-	usd = "usd",
-}
+export default function CurrencySelect({ selectedCurrency = Currency.btc }: { selectedCurrency: string | undefined }) {
+	const parsedCurrency = CurrencySchema.parse(selectedCurrency);
 
-export default function CurrencySelect() {
-	const [currency, setCurrency] = useState<Currency>(Currency.btc);
+	const router = useRouter();
+	const [currency, setCurrency] = useState(parsedCurrency);
 	const currenciesMap = new Map([
 		[Currency.btc, "BTC (₿)"],
 		[Currency.eur, "EUR (€)"],
 		[Currency.usd, "USD ($)"],
 	]);
+
+	const cookies = new Cookies();
+
+	useEffect(() => {
+		const dateCopy = new Date();
+		dateCopy.setFullYear(dateCopy.getFullYear() + 1);
+
+		cookies.set("currency", currency, {
+			expires: dateCopy,
+			path: "/",
+		});
+		router.refresh();
+	}, [currency]);
 
 	return (
 		<>

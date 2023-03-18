@@ -1,21 +1,14 @@
 import { z } from "zod";
 
-export const CurrencyResponse = z.object({
-	merchant: z.object({
-		USD: z.number(),
-		EUR: z.number(),
-	}),
-	trader: z.object({
-		sell: z.object({
-			USD: z.number(),
-			EUR: z.number(),
-		}),
-		buy: z.object({
-			USD: z.number(),
-			EUR: z.number(),
-		}),
-	}),
-});
+export enum Currency {
+	eur = "EUR",
+	usd = "USD",
+	btc = "BTC",
+}
+
+export const CurrencyResponse = z.number();
+
+export const CurrencySchema = z.nativeEnum(Currency);
 
 export const BlockchainAddressResponse = z.object({
 	data: z.record(
@@ -37,6 +30,7 @@ export const BlockchainTransactionResponse = z.object({
 		z.string(),
 		z.object({
 			transaction: z.object({
+				block_id: z.number(),
 				hash: z.string(),
 				size: z.number(),
 				time: z.string(),
