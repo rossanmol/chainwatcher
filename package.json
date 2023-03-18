@@ -12,7 +12,8 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@next/font": "^13.1.6",
@@ -82,6 +83,7 @@
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "autoprefixer": "^10.4.13",
+    "cypress": "^12.8.1",
     "eslint": "^8.31.0",
     "eslint-config-next": "13.0.0",
     "eslint-config-prettier": "^8.3.0",
