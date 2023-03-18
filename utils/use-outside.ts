@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useComponentVisible<T extends Element>(initialIsVisible: boolean) {
+export default function useComponentVisible<T extends Element>(
+	initialIsVisible: boolean
+) {
 	const [isComponentVisible, setIsComponentVisible] =
 		useState(initialIsVisible);
 	const ref = useRef<T>(null);
