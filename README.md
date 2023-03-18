@@ -11,6 +11,8 @@ It uses the following technologies to combine the requested features:
 - Tailwind / Shadcn / RadixUI were used for styling of the components.
 - Zod ❤️, a small library that converts `unknown` to fully typed definitions. When receiving input from users, zod is a must.
 - Prettier / Eslint to ensure consistent code style across the whole project. This is even more useful with more contributors.
+- Usage of localstorage for storing state required for notifications. This ensures that data is not lost after reload.
+- Usage of cookie for currencies, the perfect data source that can be used across browser and server.
 
 # Project Requirements
 
