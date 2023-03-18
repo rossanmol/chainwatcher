@@ -2,13 +2,7 @@
 
 import { FaRegClipboard } from "react-icons/fa";
 
-export default function InfoSection({
-	title,
-	value,
-}: {
-	title: string;
-	value: string | number | JSX.Element;
-}) {
+export default function InfoSection({ title, value }: { title: string; value: string | number | JSX.Element }) {
 	return (
 		<div>
 			<div className="font-bold text-md text-slate-900">{title}</div>

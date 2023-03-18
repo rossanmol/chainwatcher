@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { PrismaClient } from "@prisma/client";
 
-import CopyToClipboardButton from "@/components/copy-to-clipboard/copy-to-clipboard";
+import TopWidget from "@/components/top-widget/top-widget";
 
 async function getTopTransactions() {
 	const prisma = new PrismaClient();
@@ -26,10 +25,7 @@ async function getTopAdresses() {
 }
 
 export default async function Home() {
-	const [transactions, addresses] = await Promise.all([
-		getTopTransactions(),
-		getTopAdresses(),
-	]);
+	const [transactions, addresses] = await Promise.all([getTopTransactions(), getTopAdresses()]);
 
 	return (
 		<>
@@ -39,36 +35,15 @@ export default async function Home() {
 				</h1>
 			</div>
 
-			<section className="container mx-auto pt-12 grid gap-12 justify-center sm:grid-cols-2 grid-cols-1 sm:w-[600px] w-[300px]">
-				<section className="border-2 p-4 bg-slate-300 border-slate-400 flex gap-2 flex-col">
-					<div className="text-slate-700 font-black">Top Transactions</div>
-					<div>
-						{transactions.map((transaction) => (
-							<div className="flex">
-								<ol className="w-48 text-sm text-slate-600 overflow-hidden text-ellipsis whitespace-nowrap">
-									<Link href={`/transaction/${transaction.id}`}>
-										{transaction.id}
-									</Link>
-									<CopyToClipboardButton text={transaction.id} />
-								</ol>
-							</div>
-						))}
-					</div>
-				</section>
-
-				<section className="border-2 p-4 bg-slate-300 border-slate-400 flex gap-2 flex-col">
-					<div className="text-slate-700 font-black">Top Addresses</div>
-					<div>
-						{transactions.map((address) => (
-							<div className="flex">
-								<ol className="w-48 text-sm text-slate-600 overflow-hidden text-ellipsis whitespace-nowrap">
-									<Link href={`/address/${address.id}`}>{address.id}</Link>
-									<CopyToClipboardButton text={address.id} />
-								</ol>
-							</div>
-						))}
-					</div>
-				</section>
+			<section className="container mx-auto grid w-[300px] grid-cols-1 justify-center gap-12 pt-12 sm:w-[600px] sm:grid-cols-2">
+				<TopWidget
+					title="Top Transactions"
+					items={transactions.map((transaction) => ({ ...transaction, url: `/transaction/${transaction.id}` }))}
+				/>
+				<TopWidget
+					title="Top Widgets"
+					items={addresses.map((address) => ({ ...address, url: `/address/${address.id}` }))}
+				/>
 			</section>
 		</>
 	);

@@ -3,30 +3,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useComponentVisible from "@/utils/use-outside";
+import { FaSearch, FaTimes } from "react-icons/fa";
 
-import {
-	Command,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "@/components/ui/command";
+import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Button } from "../ui/button";
 
 export default function Search({ className }: { className: string }) {
 	const router = useRouter();
 	const [term, setTerm] = useState<string>("");
+	const [isSearchVisible, setIsSearchVisible] = useState(false);
 	const [address, setAddress] = useState<string | undefined | null>();
 	const [transaction, setTransaction] = useState<string | undefined | null>();
-	const { ref, isComponentVisible, setIsComponentVisible } =
-		useComponentVisible<HTMLDivElement>(false);
+	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible<HTMLDivElement>(false);
 
-	useEffect(
-		() => setIsComponentVisible(!!term.length),
-		[term, setIsComponentVisible]
-	);
+	useEffect(() => setIsComponentVisible(!!term.length), [term, setIsComponentVisible]);
 
 	const submitSearch = () => {
 		setIsComponentVisible(false);
+		setIsSearchVisible(false);
 
 		if (address) {
 			return router.push(`/address/${address}`);
@@ -40,7 +34,7 @@ export default function Search({ className }: { className: string }) {
 	return (
 		<>
 			<form
-				className={`block @container ${className} relative`}
+				className={`block  ${isSearchVisible ? "@container-normal" : "@container"} ${className} @xl:relative`}
 				onSubmit={(e) => {
 					e.preventDefault();
 					submitSearch();
@@ -49,9 +43,12 @@ export default function Search({ className }: { className: string }) {
 				<Command
 					ref={ref}
 					shouldFilter={false}
-					className="absolute top-[-22px] hidden h-auto w-full overflow-visible rounded-lg border border-slate-100 shadow-md @xl:block dark:border-slate-800"
+					className={`absolute top-[-22px] ${
+						isSearchVisible ? "absolute left-0 top-0 w-full" : "hidden"
+					} z-10 h-auto w-full overflow-visible rounded-none border border-slate-100 shadow-md @xl:block @xl:rounded-lg dark:border-slate-800`}
 				>
 					<CommandInput
+						className="h-[61px] @xl:h-auto w-5/6"
 						onKeyDown={(event) => {
 							if (event.key === "Enter") {
 								submitSearch();
@@ -61,17 +58,15 @@ export default function Search({ className }: { className: string }) {
 						placeholder="Search Adresses and Transactions"
 						onValueChange={(value) => {
 							const sanitizedValue = value.trim();
-							const addressMatch = sanitizedValue.match(
-								/^([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/
-							);
-							const transactionMatch =
-								sanitizedValue.match(/^[a-fA-F0-9]{64}$/);
+							const addressMatch = sanitizedValue.match(/^([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/);
+							const transactionMatch = sanitizedValue.match(/^[a-fA-F0-9]{64}$/);
 
 							setAddress(addressMatch && addressMatch[0]);
 							setTransaction(transactionMatch && transactionMatch[0]);
 							setTerm(sanitizedValue);
 						}}
 					/>
+
 					{isComponentVisible && (
 						<CommandList>
 							<CommandGroup>
@@ -94,6 +89,23 @@ export default function Search({ className }: { className: string }) {
 						</CommandList>
 					)}
 				</Command>
+
+				{isSearchVisible ? (
+					<Button
+						className="absolute right-0 inset-y-0 h-full z-10"
+						type="button"
+						variant="ghost"
+						onClick={() => setIsSearchVisible(false)}
+					>
+						<FaTimes />
+					</Button>
+				) : (
+					<div className="flex w-full justify-end @xl:hidden">
+						<Button type="button" className="bg-pink-700 text-white" onClick={() => setIsSearchVisible(true)}>
+							<FaSearch />
+						</Button>
+					</div>
+				)}
 			</form>
 		</>
 	);

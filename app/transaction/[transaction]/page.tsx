@@ -34,23 +34,17 @@ async function getCount(hash: string) {
 	return result?.count || 0;
 }
 
-export default async function TransactionPage({
-	params: { transaction },
-}: {
-	params: { transaction: string };
-}) {
+export default async function TransactionPage({ params: { transaction } }: { params: { transaction: string } }) {
 	const payload = await getTransaction(transaction);
 	await increaseCount(payload.hash);
 	const transactionCount = await getCount(payload.hash);
 
 	return (
 		<>
-			<section className="flex justify-center container mx-auto pt-12">
-				<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-slate-300 bg-slate-200 p-2">
+			<section className="container mx-auto flex justify-center pt-12">
+				<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-slate-300 bg-slate-50 p-2">
 					<h1 className="text-2xl font-black">Bitcoin Transaction</h1>
-					<div className="text-xs text-slate-400">
-						Occured on {payload.receivedTime}
-					</div>
+					<div className="text-xs text-slate-400">Occured on {payload.receivedTime}</div>
 
 					<div className="my-2">
 						<span

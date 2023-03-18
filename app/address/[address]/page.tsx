@@ -1,12 +1,7 @@
 import { getAddress } from "@/utils/blockchain";
 
-export default async function AddressPage({
-	params: { address },
-}: {
-	params: { address: string };
-}) {
-	const { balance, unspent, sent, received, totalTransactions } =
-		await getAddress(address);
+export default async function AddressPage({ params: { address } }: { params: { address: string } }) {
+	const { balance, unspent, sent, received, totalTransactions } = await getAddress(address);
 
 	return (
 		<>

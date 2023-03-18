@@ -9,15 +9,9 @@ const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = ({
-	className,
-	children,
-	...props
-}: DialogPrimitive.DialogPortalProps) => (
+const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
 	<DialogPrimitive.Portal className={cn(className)} {...props}>
-		<div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">
-			{children}
-		</div>
+		<div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">{children}</div>
 	</DialogPrimitive.Portal>
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
@@ -62,31 +56,13 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({
-	className,
-	...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-	<div
-		className={cn(
-			"flex flex-col space-y-2 text-center sm:text-left",
-			className
-		)}
-		{...props}
-	/>
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+	<div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
 );
 DialogHeader.displayName = "DialogHeader";
 
-const DialogFooter = ({
-	className,
-	...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-	<div
-		className={cn(
-			"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-			className
-		)}
-		{...props}
-	/>
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+	<div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
 );
 DialogFooter.displayName = "DialogFooter";
 
@@ -96,11 +72,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<DialogPrimitive.Title
 		ref={ref}
-		className={cn(
-			"text-lg font-semibold text-slate-900",
-			"dark:text-slate-50",
-			className
-		)}
+		className={cn("text-lg font-semibold text-slate-900", "dark:text-slate-50", className)}
 		{...props}
 	/>
 ));
@@ -118,12 +90,4 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-export {
-	Dialog,
-	DialogTrigger,
-	DialogContent,
-	DialogHeader,
-	DialogFooter,
-	DialogTitle,
-	DialogDescription,
-};
+export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription };

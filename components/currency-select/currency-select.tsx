@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 const enum Currency {
 	btc = "btc",
@@ -27,7 +21,7 @@ export default function CurrencySelect() {
 	return (
 		<>
 			<Select onValueChange={(value) => setCurrency(value as Currency)}>
-				<SelectTrigger className="w-[130px]">
+				<SelectTrigger className="w-[130px] bg-pink-100">
 					<SelectValue placeholder={currenciesMap.get(currency)} />
 				</SelectTrigger>
 				<SelectContent>

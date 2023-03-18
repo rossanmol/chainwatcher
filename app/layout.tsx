@@ -17,24 +17,18 @@ const font = Roboto({
 	subsets: ["latin"],
 });
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<header className="flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3">
-					<Link className="text-xl font-black text-slate-800" href="/">
+				<header className="flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3 relative">
+					<Link className="text-xl font-black text-slate-50" href="/">
 						ChainWatcher
 					</Link>
 					<Search className="flex w-full max-w-xl" />
 					<CurrencySelect />
 				</header>
-				<main className="col-span-3 min-h-screen bg-slate-100 dark:border-l-slate-700 xl:col-span-4">
-					{children}
-				</main>
+				<main className="col-span-3 min-h-screen bg-slate-100 dark:border-l-slate-700 xl:col-span-4">{children}</main>
 			</body>
 		</html>
 	);

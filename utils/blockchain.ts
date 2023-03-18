@@ -1,8 +1,4 @@
-import {
-	BlockchainAddressResponse,
-	BlockchainTransactionResponse,
-	CurrencyResponse,
-} from "./blockchain.schema";
+import { BlockchainAddressResponse, BlockchainTransactionResponse, CurrencyResponse } from "./blockchain.schema";
 
 function convertBalance(balance: number) {
 	return Number((balance / Math.pow(10, 10)).toFixed(10));
@@ -36,9 +32,7 @@ export async function getAddress(hash: string) {
 
 export async function getTransaction(hash: string) {
 	console.log("wow fetching", Math.random());
-	const res = await fetch(
-		`https://api.blockchair.com/bitcoin/dashboards/transaction/${hash}`
-	);
+	const res = await fetch(`https://api.blockchair.com/bitcoin/dashboards/transaction/${hash}`);
 	const json = await res.json();
 	const parsedJson = BlockchainTransactionResponse.parse(json);
 	const transaction = parsedJson.data[hash].transaction;
