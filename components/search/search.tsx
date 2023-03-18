@@ -48,7 +48,8 @@ export default function Search({ className }: { className: string }) {
 					} z-10 h-auto w-full overflow-visible rounded-none border border-slate-100 shadow-md @xl:block @xl:rounded-lg dark:border-slate-800`}
 				>
 					<CommandInput
-						className="h-[61px] @xl:h-auto w-5/6"
+						data-testid="search-input"
+						className="h-[61px] w-5/6 @xl:h-auto @xl:w-full"
 						onKeyDown={(event) => {
 							if (event.key === "Enter") {
 								submitSearch();
@@ -68,7 +69,7 @@ export default function Search({ className }: { className: string }) {
 					/>
 
 					{isComponentVisible && (
-						<CommandList>
+						<CommandList data-testid="search-results">
 							<CommandGroup>
 								{!address && !transaction && (
 									<CommandItem disabled>
@@ -92,7 +93,8 @@ export default function Search({ className }: { className: string }) {
 
 				{isSearchVisible ? (
 					<Button
-						className="absolute right-0 inset-y-0 h-full z-10"
+						data-testid="mobile-close-button"
+						className="absolute inset-y-0 right-0 z-10 h-full"
 						type="button"
 						variant="ghost"
 						onClick={() => setIsSearchVisible(false)}
@@ -100,8 +102,13 @@ export default function Search({ className }: { className: string }) {
 						<FaTimes />
 					</Button>
 				) : (
-					<div className="flex w-full justify-end @xl:hidden">
-						<Button type="button" className="bg-pink-700 text-white" onClick={() => setIsSearchVisible(true)}>
+					<div className="flex w-full justify-end @xl:hidden" data-testid="mobile-button-container">
+						<Button
+							data-testid="mobile-button"
+							type="button"
+							className="bg-pink-700 text-white"
+							onClick={() => setIsSearchVisible(true)}
+						>
 							<FaSearch />
 						</Button>
 					</div>
