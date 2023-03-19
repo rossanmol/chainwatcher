@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en">
 			<body className={font.className}>
 				<header className="relative flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3">
-					<Link prefetch={false} className="text-xl font-black text-slate-50" href="/">
+					<Link className="text-xl font-black text-slate-50" href="/">
 						ChainWatcher
 					</Link>
 					<Search className="flex w-full max-w-xl" />

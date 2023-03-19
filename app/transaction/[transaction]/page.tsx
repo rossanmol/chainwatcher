@@ -1,5 +1,7 @@
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getTransaction } from "@/utils/blockchain";
+import { getExchangeRate, getReadableCurrency } from "@/utils/currency";
 import { PrismaClient } from "@prisma/client";
 
 import CopyToClipboardButton from "@/components/copy-to-clipboard/copy-to-clipboard";
@@ -37,7 +39,12 @@ export async function generateMetadata({ params: { transaction } }: Page) {
 }
 
 export default async function TransactionPage({ params: { transaction } }: Page) {
-	const payload = await getTransaction(transaction);
+	const cookieStore = cookies();
+	const cookieCurrency = cookieStore.get("currency");
+	const [exchangeRate, payload] = await Promise.all([
+		getExchangeRate(cookieCurrency?.value),
+		getTransaction(transaction),
+	]);
 
 	if (!payload) {
 		notFound();
@@ -82,9 +89,19 @@ export default async function TransactionPage({ params: { transaction } }: Page)
 
 				<InfoSection title="Confirmations" value={payload.confirmations} />
 				<InfoSection title="Size (in bytes)" value={payload.sizeInBytes} />
-				<InfoSection title="BTC Input" value={payload.totalBtcInput} />
-				<InfoSection title="BTC Output" value={payload.totalBtcOutput} />
-				<InfoSection title="Fees" value={payload.totalFees} data-testid="transaction-fees" />
+				<InfoSection
+					title="BTC Input"
+					value={getReadableCurrency(payload.totalBtcInput, exchangeRate.value, exchangeRate.currency)}
+				/>
+				<InfoSection
+					title="BTC Output"
+					value={getReadableCurrency(payload.totalBtcOutput, exchangeRate.value, exchangeRate.currency)}
+				/>
+				<InfoSection
+					title="Fees"
+					value={getReadableCurrency(payload.totalFees, exchangeRate.value, exchangeRate.currency)}
+					data-testid="transaction-fees"
+				/>
 				<div className="text-right">
 					<SubscribeButton transaction={transaction} />
 				</div>

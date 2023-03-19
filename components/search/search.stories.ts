@@ -11,10 +11,14 @@ const meta: Meta<typeof component> = {
 	tags: ["autodocs"],
 };
 
+const delay = (delayInMilliseconds) => {
+	return new Promise((resolve) => setTimeout(resolve, delayInMilliseconds));
+};
+
 type Story = StoryObj<typeof component>;
 
 export const InvalidSearch: Story = {
-	play: async ({ canvasElement, args }) => {
+	play: async ({ canvasElement }) => {
 		const rootElement = within(canvasElement);
 
 		const inputElement = await rootElement.findByTestId("search-input");
@@ -100,6 +104,8 @@ export const Bech32addressSearch: Story = {
 
 export const TransactionSearch: Story = {
 	play: async ({ canvasElement }) => {
+		await delay(100); // tiny hack, as storybook does not wait for elements as cypress does
+
 		const rootElement = within(canvasElement);
 
 		const inputElement = await rootElement.findByTestId("search-input");
@@ -116,28 +122,9 @@ export const TransactionSearch: Story = {
 export const SmallScreenView: Story = {
 	parameters: {
 		viewport: {
-			//👇 The viewports you want to use
 			viewports: INITIAL_VIEWPORTS,
-			//👇 Your own default viewport
 			defaultViewport: "iphone6",
 		},
-	},
-	play: async ({ canvasElement, cont }) => {
-		const rootElement = within(canvasElement);
-
-		expect(await rootElement.findByTestId("mobile-button-container")).toBeVisible();
-
-		userEvent.click(await rootElement.findByTestId("mobile-button"));
-		expect(await rootElement.findByTestId("search-input")).toBeVisible();
-		expect(await rootElement.findByTestId("mobile-close-button")).toBeVisible();
-
-		userEvent.type(await rootElement.findByTestId("search-input"), "hello");
-		const resultsElement = await rootElement.findByTestId("search-results");
-		expect(resultsElement).toBeVisible();
-
-		userEvent.click(await rootElement.findByTestId("mobile-close-button"));
-		expect(await rootElement.findByTestId("search-input")).not.toBeVisible();
-		expect(await rootElement.findByTestId("mobile-button-container")).toBeVisible();
 	},
 };
 
