@@ -64,8 +64,8 @@ export default async function Home() {
 					title="⭐ Top Addresses"
 					items={addresses.map((address) => ({ ...address, url: `/address/${address.id}` }))}
 				/>
-				<SubscriptionWidget title="🔔 Address Subscriptions" type={WatcherObjectType.address} />
 				<SubscriptionWidget title="🔔 Transaction Subscriptions" type={WatcherObjectType.transaction} />
+				<SubscriptionWidget title="🔔 Address Subscriptions" type={WatcherObjectType.address} />
 			</section>
 		</>
 	);

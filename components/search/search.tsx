@@ -3,19 +3,17 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useComponentVisible from "@/utils/use-outside";
-import { address, networks } from "bitcoinjs-lib";
 import { FaSearch, FaTimes } from "react-icons/fa";
 
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Button } from "../ui/button";
 
 function isValidBitcoinAddress(hash: string) {
-	try {
-		address.toOutputScript(hash, networks.bitcoin);
-		return true;
-	} catch (error) {
-		return false;
-	}
+	return (
+		/^1[1-9A-HJ-NP-Za-km-z]{25,34}$/.test(hash) ||
+		/^3[1-9A-HJ-NP-Za-km-z]{25,34}$/.test(hash) ||
+		/^bc1([ac-hj-np-z02-9]{1,}[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{1,}){1,39}$/.test(hash)
+	);
 }
 
 export default function Search({ className }: { className: string }) {
@@ -32,12 +30,12 @@ export default function Search({ className }: { className: string }) {
 		setIsComponentVisible(false);
 		setIsSearchVisible(false);
 
-		if (address) {
-			return router.push(`/address/${address}`);
-		}
-
 		if (transaction) {
 			return router.push(`/transaction/${transaction}`);
+		}
+
+		if (address) {
+			return router.push(`/address/${address}`);
 		}
 	};
 

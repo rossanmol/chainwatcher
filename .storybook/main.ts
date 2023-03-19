@@ -15,14 +15,4 @@ const config: StorybookConfig = {
 	},
 };
 
-export const parameters = {
-	nextjs: {
-		appDirectory: true,
-		navigation: {
-			pathname: "/",
-			query: {},
-		},
-	},
-};
-
 export default config;

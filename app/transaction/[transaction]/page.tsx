@@ -53,11 +53,14 @@ export default async function TransactionPage({ params: { transaction } }: Page)
 	return (
 		<section className="container mx-auto flex justify-center pt-12">
 			<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-slate-300 bg-slate-50 p-2">
-				<h1 className="text-2xl font-black">Bitcoin Transaction</h1>
+				<h1 className="text-2xl font-black" data-testid="page-title">
+					Bitcoin Transaction
+				</h1>
 				<div className="text-xs text-slate-400">Occured on {payload.receivedTime}</div>
 
 				<div className="my-2">
 					<span
+						data-testid="transaction-status"
 						className={`${
 							payload.status === "confirmed"
 								? "border-green-400 bg-green-300 text-green-700"
@@ -71,7 +74,7 @@ export default async function TransactionPage({ params: { transaction } }: Page)
 					title="Hash Id"
 					value={
 						<>
-							{payload.hash}
+							<span data-testid="transaction-hash">{payload.hash}</span>
 							<CopyToClipboardButton text={payload.hash} />
 						</>
 					}
@@ -80,8 +83,8 @@ export default async function TransactionPage({ params: { transaction } }: Page)
 				<InfoSection title="Confirmations" value={payload.confirmations} />
 				<InfoSection title="Size (in bytes)" value={payload.sizeInBytes} />
 				<InfoSection title="BTC Input" value={payload.totalBtcInput} />
-				<InfoSection title="BTC output" value={payload.totalBtcOutput} />
-				<InfoSection title="Fees" value={payload.totalFees} />
+				<InfoSection title="BTC Output" value={payload.totalBtcOutput} />
+				<InfoSection title="Fees" value={payload.totalFees} data-testid="transaction-fees" />
 				<div className="text-right">
 					<SubscribeButton transaction={transaction} />
 				</div>

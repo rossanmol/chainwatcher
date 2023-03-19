@@ -6,7 +6,7 @@ function convertBalance(balance: number) {
 
 export async function getAddress(hash: string) {
 	const res = await fetch(
-		`https://api.blockchair.com/bitcoin/dashboards/address/${hash}?key=G___aunp0Qn4vEVyqVJc38t1u6OkJsNX`
+		`https://api.blockchair.com/bitcoin/dashboards/address/${hash}?key=${process.env.CHAIRGATE_TOKEN}`
 	);
 
 	const json = await res.json();

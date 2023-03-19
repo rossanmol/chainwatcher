@@ -11,7 +11,7 @@ interface Entry {
 
 export default function TopWidget({ items, title }: { items: Entry[]; title: string }) {
 	return (
-		<section className="flex flex-col gap-2 border-2 border-slate-400 bg-slate-300 p-4">
+		<section className="flex flex-col gap-2 border-2 border-slate-400 bg-slate-300 p-4" data-testid="top-widget">
 			<div className="font-black text-slate-700" data-testid="widget-title">
 				{title}
 			</div>

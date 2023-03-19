@@ -16,6 +16,15 @@ export const ShortContents: Story = {
 		title: "Title",
 		value: "Value",
 	},
+	play: async ({ canvasElement, args }) => {
+		const rootElement = within(canvasElement);
+
+		const titleEl = await rootElement.findByTestId("info-section-title");
+		expect(titleEl.innerText).toBe(args.title);
+
+		const valueEl = await rootElement.findByTestId("info-section-value");
+		expect(valueEl.innerText).toBe(args.value);
+	},
 };
 
 export const LongText: Story = {

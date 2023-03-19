@@ -38,11 +38,18 @@ export default async function AddressPage({ params: { address } }: Page) {
 	return (
 		<section className="container mx-auto flex justify-center pt-12">
 			<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-slate-300 bg-slate-50 p-2">
-				<h1 className="text-2xl font-black">Bitcoin Address</h1>
-				<div className="text-xs text-slate-400">{payload.hash}</div>
+				<h1 className="text-2xl font-black" data-testid="page-title">
+					Bitcoin Address
+				</h1>
+				<div className="text-xs text-slate-400" data-testid="address-hash">
+					{payload.hash}
+				</div>
 
 				<div className="my-2">
-					<span className="rounded-md border-2 border-slate-400 bg-slate-300 p-1 text-green-700">
+					<span
+						className="rounded-md border-2 border-slate-400 bg-slate-300 p-1 text-green-700"
+						data-testid="address-balance"
+					>
 						{getReadableCurrency(payload.balance, exchangeRate.value, exchangeRate.currency)}
 					</span>
 				</div>

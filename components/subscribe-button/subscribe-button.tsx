@@ -22,6 +22,7 @@ export default function SubscribeButton(params: { address: string } | { transact
 
 	return (
 		<Button
+			data-testid="subscribe-button"
 			disabled={isLoading}
 			variant={isSubscribed ? "destructive" : "default"}
 			onClick={async () => {
@@ -35,6 +36,7 @@ export default function SubscribeButton(params: { address: string } | { transact
 
 					setIsLoading(false);
 					setIsSubscribed(false);
+					return;
 				}
 
 				try {
