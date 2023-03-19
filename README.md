@@ -65,6 +65,7 @@ I felt like working on all below improvements, however that would go beyond the 
 - Individual components are mostly made for specific container sizes. Usage of container queries would allow them to be used in multiple websites.
 - No use of Design System, so some components are themed under various colours made specifically for this website. These components might not look as good if had to be re-used on other sites.
 - Use **websockets** for notifications instead of polling system.
+- Currently to find difference in transaction/addresses, we are hashing the whole response, which could contain time sensitive data, or data which might not be related to actual hash. Reducing the amount of payload that falls under hash, could make it less sensitive.
 
 ### Testing improvements
 
