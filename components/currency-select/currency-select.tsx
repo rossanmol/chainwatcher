@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Currency, CurrencySchema } from "@/utils/blockchain.schema";
+import { Currency } from "@/utils/blockchain.schema";
 import { parseCurrency } from "@/utils/currency";
 import Cookies from "universal-cookie";
 
@@ -18,9 +18,8 @@ export default function CurrencySelect({ selectedCurrency }: { selectedCurrency:
 		[Currency.usd, "USD ($)"],
 	]);
 
-	const cookies = new Cookies();
-
 	useEffect(() => {
+		const cookies = new Cookies();
 		const dateCopy = new Date();
 		dateCopy.setFullYear(dateCopy.getFullYear() + 1);
 
@@ -29,7 +28,7 @@ export default function CurrencySelect({ selectedCurrency }: { selectedCurrency:
 			path: "/",
 		});
 		router.refresh();
-	}, [currency]);
+	}, [currency, router]);
 
 	return (
 		<>

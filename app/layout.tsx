@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 
 import CurrencySelect from "@/components/currency-select/currency-select";
+import HashListener from "@/components/hash-listener/hash-listener";
 import Search from "@/components/search/search";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -34,7 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<Search className="flex w-full max-w-xl" />
 					<CurrencySelect selectedCurrency={currency} />
 				</header>
-				<Toaster></Toaster>
+				<Toaster />
+				<HashListener />
 				<main className="col-span-3 min-h-screen bg-slate-100 dark:border-l-slate-700 xl:col-span-4">{children}</main>
 			</body>
 		</html>

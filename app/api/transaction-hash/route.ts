@@ -1,12 +1,6 @@
-import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { getTransaction } from "@/utils/blockchain";
-
-function generateHash(value: string) {
-	const hash = crypto.createHash("sha1");
-	hash.update(value);
-	return hash.digest("hex");
-}
+import { generateHash } from "@/utils/hash";
 
 export async function GET(request: Request) {
 	const url = new URL(request.url);

@@ -17,7 +17,7 @@ export default function TopWidget({ items, title }: { items: Entry[]; title: str
 			</div>
 			<div className="flex flex-col gap-1">
 				{items.map((item) => (
-					<div className="flex">
+					<div className="flex" key={item.id}>
 						<ol>
 							<li className="flex flex-row" data-testid="widget-item">
 								<Link
