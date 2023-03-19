@@ -32,20 +32,8 @@ async function getTopAdresses() {
 	});
 }
 
-async function getAddressSubscriptions() {
-	const prisma = new PrismaClient();
-
-	return prisma.addressSubscription.findMany({
-		take: 5,
-	});
-}
-
 export default async function Home() {
-	const [transactions, addresses, addressSubscriptions] = await Promise.all([
-		getTopTransactions(),
-		getTopAdresses(),
-		getAddressSubscriptions(),
-	]);
+	const [transactions, addresses] = await Promise.all([getTopTransactions(), getTopAdresses()]);
 
 	return (
 		<>

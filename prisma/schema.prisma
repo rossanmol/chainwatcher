@@ -19,15 +19,3 @@ model Address {
     id          String       @id
     count Int
 }
-
-model AddressSubscription {
-    id          String       @id
-    hash String
-    createdAt DateTime
-}
-
-model TransactionSubscription {
-    id          String       @id
-    hash String
-    createdAt DateTime
-}
