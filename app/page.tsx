@@ -1,5 +1,7 @@
+import { WatcherObjectType } from "@/utils/watcher-object";
 import { PrismaClient } from "@prisma/client";
 
+import SubscriptionWidget from "@/components/subscription-widget/subscription-widget";
 import TopWidget from "@/components/top-widget/top-widget";
 
 async function getTopTransactions() {
@@ -55,17 +57,15 @@ export default async function Home() {
 
 			<section className="container mx-auto grid w-[300px] grid-cols-1 justify-center gap-12 pt-12 sm:w-[600px] sm:grid-cols-2">
 				<TopWidget
-					title="Top Transactions"
+					title="⭐ Top Transactions"
 					items={transactions.map((transaction) => ({ ...transaction, url: `/transaction/${transaction.id}` }))}
 				/>
 				<TopWidget
-					title="Top Addresses"
+					title="⭐ Top Addresses"
 					items={addresses.map((address) => ({ ...address, url: `/address/${address.id}` }))}
 				/>
-				<TopWidget
-					title="Address Subscriptions"
-					items={addressSubscriptions.map((address) => ({ ...address, url: `/address/${address.id}` }))}
-				/>
+				<SubscriptionWidget title="🔔 Address Subscriptions" type={WatcherObjectType.address} />
+				<SubscriptionWidget title="🔔 Transaction Subscriptions" type={WatcherObjectType.transaction} />
 			</section>
 		</>
 	);

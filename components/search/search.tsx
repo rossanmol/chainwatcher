@@ -3,10 +3,20 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useComponentVisible from "@/utils/use-outside";
+import { address, networks } from "bitcoinjs-lib";
 import { FaSearch, FaTimes } from "react-icons/fa";
 
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Button } from "../ui/button";
+
+function isValidBitcoinAddress(hash: string) {
+	try {
+		address.toOutputScript(hash, networks.bitcoin);
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
 
 export default function Search({ className }: { className: string }) {
 	const router = useRouter();
@@ -56,13 +66,12 @@ export default function Search({ className }: { className: string }) {
 							}
 						}}
 						onFocus={() => setIsComponentVisible(!!term.length)}
-						placeholder="Search Adresses and Transactions"
+						placeholder="Search Adresses and Transactions (P2PKH, P2SH, and Bech32)"
 						onValueChange={(value) => {
 							const sanitizedValue = value.trim();
-							const addressMatch = sanitizedValue.match(/^([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/);
 							const transactionMatch = sanitizedValue.match(/^[a-fA-F0-9]{64}$/);
 
-							setAddress(addressMatch && addressMatch[0]);
+							setAddress(isValidBitcoinAddress(sanitizedValue) ? sanitizedValue : null);
 							setTransaction(transactionMatch && transactionMatch[0]);
 							setTerm(sanitizedValue);
 						}}
