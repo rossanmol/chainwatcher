@@ -33,7 +33,7 @@ export default function CurrencySelect({ selectedCurrency }: { selectedCurrency:
 	return (
 		<>
 			<Select onValueChange={(value) => setCurrency(value as Currency)}>
-				<SelectTrigger className="w-[130px] bg-pink-100" data-testid="currency-trigger">
+				<SelectTrigger className="w-[130px] bg-white" data-testid="currency-trigger">
 					<SelectValue placeholder={currenciesMap.get(currency)} />
 				</SelectTrigger>
 				<SelectContent data-testid="currency-content">

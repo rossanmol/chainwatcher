@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en">
 			<body className={font.className}>
 				<header className="relative flex items-center justify-between gap-2 border-b-2 border-pink-500 bg-pink-600 p-3">
-					<Link className="text-xl font-black text-slate-50" href="/">
+					<Link className="text-xl font-black text-pink-50" href="/">
 						ChainWatcher
 					</Link>
 					<Search className="flex w-full max-w-xl" />
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				</header>
 				<Toaster />
 				<HashListener />
-				<main className="col-span-3 min-h-screen bg-slate-100 dark:border-l-slate-700 xl:col-span-4">{children}</main>
+				<main className="col-span-3 min-h-screen bg-purple-50 dark:border-l-pink-700 xl:col-span-4">{children}</main>
 			</body>
 		</html>
 	);

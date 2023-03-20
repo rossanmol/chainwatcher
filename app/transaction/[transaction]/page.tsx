@@ -59,11 +59,11 @@ export default async function TransactionPage({ params: { transaction } }: Page)
 
 	return (
 		<section className="container mx-auto flex justify-center pt-12">
-			<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-slate-300 bg-slate-50 p-2">
+			<section className="col-span-3 flex w-full max-w-xl flex-col gap-1 break-words rounded-lg border-2 border-pink-300 bg-pink-50 p-2">
 				<h1 className="text-2xl font-black" data-testid="page-title">
 					Bitcoin Transaction
 				</h1>
-				<div className="text-xs text-slate-400">Occured on {payload.receivedTime}</div>
+				<div className="text-xs text-pink-400">Occured on {payload.receivedTime}</div>
 
 				<div className="my-2">
 					<span

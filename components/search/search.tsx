@@ -53,7 +53,7 @@ export default function Search({ className }: { className: string }) {
 					shouldFilter={false}
 					className={`absolute top-[-22px] ${
 						isSearchVisible ? "absolute left-0 top-0 w-full" : "hidden"
-					} z-10 h-auto w-full overflow-visible rounded-none border border-slate-100 shadow-md @xl:block @xl:rounded-lg dark:border-slate-800`}
+					} z-10 h-auto w-full overflow-visible rounded-none border border-pink-100 shadow-md @xl:block @xl:rounded-lg dark:border-pink-800`}
 				>
 					<CommandInput
 						data-testid="search-input"
